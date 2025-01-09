@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/29 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2024/12/30 15:10:04 by sede-san         ###   ########.fr        #
+#    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
+#    Updated: 2025/01/09 19:16:51 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ NAME = fdf
 CC = cc
 
 # Compilation flags
-CFLAGS = -Wall -Wextra -Werror -Iinclude -pthread -lm -Ofast
+CFLAGS = -Wall -Wextra -Werror -Iinclude -pthread -Ofast
 
 # Linker flags
-LDFLAGS = -ldl -lglfw
+LDFLAGS = -lm -ldl -lglfw
 
 # Make command with no-print-directory flag
 MAKE = make --no-print-directory
@@ -106,18 +106,12 @@ clean:
 
 # Clean object files and library
 fclean: clean
-	@echo ""
 	@echo "$(RED)$(EMOJI_BOX) Cleaning libraries...$(RESET)"
 	@rm -f $(NAME)
-	@echo ""
 	@$(MAKE) cleanlibft
-	@echo ""
 	@$(MAKE) cleanft_printf
-	@echo ""
 	@$(MAKE) cleanget_next_line
-	@echo ""
 	@$(MAKE) cleanmlx
-	@echo ""
 	@echo "$(GREEN)$(EMOJI_CHECK) Libraries cleaned.$(RESET)"
 	@rm -rf $(BUILD_PATH)
 
