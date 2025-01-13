@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 18:58:54 by sede-san          #+#    #+#             */
-/*   Updated: 2024/12/11 19:03:18 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:48:32 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strdup(const char *s)
 
 /* Appends the NULL-terminated string S1 and the NULL-terminated string S2
    in a new string.  */
-char	*ft_strjoin(char *s1, const char *s2)
+char	*ft_gnl_strjoin(char *s1, const char *s2)
 {
 	char	*joined;
 	size_t	s1_len;

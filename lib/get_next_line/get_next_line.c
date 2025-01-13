@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 18:58:57 by sede-san          #+#    #+#             */
-/*   Updated: 2024/12/14 13:31:53 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:22:01 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ static char	*_fill_buffer(int fd, char *buffer)
 	buf[len] = '\0';
 	if (!ft_strchr(buf, EOL) && len == BUFFER_SIZE)
 	{
-		buffer = ft_strjoin(buffer, buf);
+		buffer = ft_gnl_strjoin(buffer, buf);
 		return (free(buf), _fill_buffer(fd, buffer));
 	}
-	buffer = ft_strjoin(buffer, buf);
+	buffer = ft_gnl_strjoin(buffer, buf);
 	if (!buffer)
 		return (free(buffer), NULL);
 	return (free(buf), buffer);
