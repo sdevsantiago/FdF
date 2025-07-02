@@ -1,5 +1,8 @@
 # Executable
 fdf
 
-# Binaries folder
-build
+# Libraries folder
+/lib
+
+# Object files
+*.o

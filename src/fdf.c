@@ -6,11 +6,11 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/01/09 20:08:19 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:21:38 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include "../include/fdf.h"
 
 void	check_keypress(mlx_key_data_t key, void *param)
 {

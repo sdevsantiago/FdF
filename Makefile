@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/01/09 19:16:51 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/02 19:30:38 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,20 +45,6 @@ EMOJI_CROSS = ❌
 EMOJI_WRENCH = 🔧
 EMOJI_BOX = 📦
 
-# ***************************** Library paths ******************************** #
-
-# Library path
-LIB_PATH = lib
-
-LIBFT_PATH = $(LIB_PATH)/Libft
-
-LIBMLX_PATH = $(LIB_PATH)/MLX42
-
-FT_PRINTF_PATH = $(LIB_PATH)/ft_printf
-
-GET_NEXT_LINE_PATH = $(LIB_PATH)/get_next_line
-GET_NEXT_LINE_FILES = get_next_line.c get_next_line_utils.c
-
 # ****************************** Source files ******************************** #
 
 # Source files path
@@ -66,118 +52,133 @@ SRC_PATH = src
 
 # Source files
 SRC = \
-	fdf.c \
+	$(SRC_PATH)/fdf.c \
 
 # ****************************** Object files ******************************** #
 
-# Object files path
-BUILD_PATH = build
-
-# Create object files path
-$(shell mkdir -p $(BUILD_PATH))
-
-# Object files
-OBJ = $(addprefix $(BUILD_PATH)/, $(SRC:.c=.o))
+OBJ = $(SRC:.c=.o)
 
 # Compile object files
-$(BUILD_PATH)/%.o: $(SRC_PATH)/%.c
+%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # ********************************* Rules ************************************ #
 
 # Compile all
 all: $(NAME)
-	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling...$(RESET)"
-	@$(MAKE) $(NAME)
+.PHONY : all
 
-$(NAME): $(OBJ)
-	@$(MAKE) libft
-	@$(MAKE) ft_printf
-	@$(MAKE) get_next_line
-	@$(MAKE) mlx
-	@$(CC) $(CFLAGS) $(OBJ) $(BUILD_PATH)/libft.a $(BUILD_PATH)/libftprintf.a $(BUILD_PATH)/get_next_line.a $(BUILD_PATH)/libmlx42.a -o $(NAME) $(LDFLAGS)
+$(NAME): lib $(OBJ)
+	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) $(MLX_BIN) $(LIBFT_BIN) $(GNL_BIN) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN)$(EMOJI_CHECK) Compiled.$(RESET)"
+.PHONY : $(NAME)
 
 # Clean object files
 clean:
 	@echo "$(RED)$(EMOJI_BROOM) Cleaning object files...$(RESET)"
 	@rm -f $(OBJ)
+	@if [ -d $(LIBFT_PATH) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) clean; \
+	fi
+	@if [ -d $(GNL_PATH) ]; then \
+		$(MAKE) -C $(GNL_PATH) clean; \
+	fi
+	@if [ -d $(MLX_PATH)/build ]; then \
+		$(MAKE) -C $(MLX_PATH)/build clean; \
+	fi
 	@echo "$(GREEN)$(EMOJI_CHECK) Object files cleaned.$(RESET)"
+.PHONY : clean
 
 # Clean object files and library
 fclean: clean
-	@echo "$(RED)$(EMOJI_BOX) Cleaning libraries...$(RESET)"
+	@echo "$(RED)$(EMOJI_BOX) Cleaning binaries...$(RESET)"
 	@rm -f $(NAME)
-	@$(MAKE) cleanlibft
-	@$(MAKE) cleanft_printf
-	@$(MAKE) cleanget_next_line
-	@$(MAKE) cleanmlx
-	@echo "$(GREEN)$(EMOJI_CHECK) Libraries cleaned.$(RESET)"
-	@rm -rf $(BUILD_PATH)
+	@if [ -d $(LIBFT_PATH) ]; then \
+		$(MAKE) -C $(LIBFT_PATH) fclean; \
+	fi
+	@if [ -d $(GNL_PATH) ]; then \
+		$(MAKE) -C $(GNL_PATH) fclean; \
+	fi
+	@echo "$(GREEN)$(EMOJI_CHECK) Binaries cleaned.$(RESET)"
+.PHONY : fclean
 
 # Recompile
 re: fclean all
+.PHONY : re
 
-# Libft rules
-libft:
-	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling libft...$(RESET)"
-	@$(MAKE) -C $(LIBFT_PATH) all > /dev/null
-	@cp $(LIBFT_PATH)/libft.a $(BUILD_PATH)
-	@echo "$(GREEN)$(EMOJI_CHECK) libft compiled.$(RESET)"
+# ********************************* Libraries ******************************** #
 
-cleanlibft:
-	@echo "$(RED)$(EMOJI_BROOM) Cleaning libft...$(RESET)"
-	@$(MAKE) -C $(LIBFT_PATH) clean > /dev/null
-	@echo "$(GREEN)$(EMOJI_CHECK) libft cleaned.$(RESET)"
+lib:
+	@$(MAKE) libft
+	@$(MAKE) get_next_line
+	@$(MAKE) mlx
+.PHONY : lib
 
-relibft: cleanlibft libft
+LIB_PATH = lib
 
-# ft_printf rules
-ft_printf:
-	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling ft_printf...$(RESET)"
-	@$(MAKE) -C $(FT_PRINTF_PATH) all > /dev/null
-	@cp $(FT_PRINTF_PATH)/libftprintf.a $(BUILD_PATH)
-	@echo "$(GREEN)$(EMOJI_CHECK) ft_printf compiled.$(RESET)"
+# ** MLX42 ** #
 
-cleanft_printf:
-	@echo "$(RED)$(EMOJI_BROOM) Cleaning ft_printf...$(RESET)"
-	@$(MAKE) -C $(FT_PRINTF_PATH) clean > /dev/null
-	@echo "$(GREEN)$(EMOJI_CHECK) ft_printf cleaned.$(RESET)"
+MLX = MLX42
+MLX_REPO = https://github.com/codam-coding-college/MLX42.git
+MLX_PATH = $(LIB_PATH)/$(MLX)
+MLX_BIN = $(MLX_PATH)/build/libmlx42.a
 
-reft_printf: cleanft_printf ft_printf
-
-# Get_next_line rules
-get_next_line:
-	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling get_next_line...$(RESET)"
-	@cd $(GET_NEXT_LINE_PATH) && $(CC) $(CFLAGS) -c $(GET_NEXT_LINE_FILES)
-	@ar rcs $(GET_NEXT_LINE_PATH)/get_next_line.a $(GET_NEXT_LINE_PATH)/*.o
-	@cp $(GET_NEXT_LINE_PATH)/get_next_line.a $(BUILD_PATH)
-	@echo "$(GREEN)$(EMOJI_CHECK) get_next_line compiled.$(RESET)"
-
-cleanget_next_line:
-	@echo "$(RED)$(EMOJI_BROOM) Cleaning get_next_line...$(RESET)"
-	@rm -f $(GET_NEXT_LINE_PATH)/*.o
-	@rm -f $(GET_NEXT_LINE_PATH)/get_next_line.a
-	@rm -f $(BUILD_PATH)/get_next_line.a
-	@echo "$(GREEN)$(EMOJI_CHECK) get_next_line cleaned.$(RESET)"
-
-reget_next_line: cleanget_next_line get_next_line
-
-# MLX rules
 mlx:
-	@echo "$(YELLOW)$(EMOJI_WRENCH) Compiling MLX42...$(RESET)"
-	@cd $(LIBMLX_PATH) && cmake -B build > /dev/null && cmake --build build -j4 > /dev/null
-	@cp $(LIBMLX_PATH)/build/libmlx42.a $(BUILD_PATH)
-	@echo "$(GREEN)$(EMOJI_CHECK) MLX42 compiled.$(RESET)"
+	@if [ ! -d $(MLX_PATH) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Cloning $(MLX)...$(RESET)"; \
+		git clone $(MLX_REPO) $(MLX_PATH); \
+		echo "$(GREEN)$(EMOJI_CHECK) $(MLX) cloned...$(RESET)"; \
+	fi
+	@if [ ! -f $(MLX_BIN) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Compiling $(MLX)...$(RESET)"; \
+		cd $(MLX_PATH) && cmake -B build && cmake --build build -j4; \
+		echo "$(GREEN)$(EMOJI_CHECK) $(MLX) compiled.$(RESET)"; \
+	else \
+		echo "$(GREEN)$(EMOJI_CHECK) $(MLX) already compiled.$(RESET)"; \
+	fi
+.PHONY : mlx
 
-cleanmlx:
-	@echo "$(RED)$(EMOJI_BROOM) Cleaning MLX42...$(RESET)"
-	@rm -rf $(LIBMLX_PATH)/build
-	@rm -f $(BUILD_PATH)/libmlx42.a
-	@echo "$(GREEN)$(EMOJI_CHECK) MLX42 cleaned.$(RESET)"
+# ** Libft ** #
 
-remlx: cleanmlx mlx
+LIBFT = Libft
+LIBFT_REPO = https://github.com/sdevsantiago/Libft.git
+LIBFT_PATH = $(LIB_PATH)/$(LIBFT)
+LIBFT_BIN = $(LIBFT_PATH)/libft.a
 
-# *********************************** Phony ********************************** #
+libft:
+	@if [ ! -d $(LIBFT_PATH) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Cloning $(LIBFT)...$(RESET)"; \
+		git clone $(LIBFT_REPO) $(LIBFT_PATH); \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) cloned...$(RESET)"; \
+	fi
+	@if [ ! -f $(LIBFT_BIN) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Compiling $(LIBFT)...$(RESET)"; \
+		$(MAKE) -C $(LIBFT_PATH) all bonus; \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) compiled.$(RESET)"; \
+	else \
+		echo "$(GREEN)$(EMOJI_CHECK) $(LIBFT) already compiled.$(RESET)"; \
+	fi
+.PHONY : libft
 
-.PHONY: all clean fclean re libft cleanlibft fcleanlibft relibft ft_printf cleanft_printf fcleanft_printf reft_printf get_next_line cleanget_next_line reget_next_line mlx cleanmlx remlx $(BUILD_PATH)
+# ** get_next_line ** #
+
+GNL = get_next_line
+GNL_REPO = https://github.com/sdevsantiago/get_next_line.git
+GNL_PATH = $(LIB_PATH)/$(GNL)
+GNL_BIN = $(GNL_PATH)/get_next_line.a
+
+get_next_line:
+	@if [ ! -d $(GNL_PATH) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Cloning $(GNL)...$(RESET)"; \
+		git clone $(GNL_REPO) $(GNL_PATH); \
+		echo "$(GREEN)$(EMOJI_CHECK) $(GNL) cloned...$(RESET)"; \
+	fi
+	@if [ ! -f $(GNL_BIN) ]; then \
+		echo "$(YELLOW)$(EMOJI_WRENCH) Compiling $(GNL)...$(RESET)"; \
+		$(MAKE) -C $(GNL_PATH) all; \
+		echo "$(GREEN)$(EMOJI_CHECK) $(GNL) compiled.$(RESET)"; \
+	else \
+		echo "$(GREEN)$(EMOJI_CHECK) $(GNL) already compiled.$(RESET)"; \
+	fi
+.PHONY : get_next_line
