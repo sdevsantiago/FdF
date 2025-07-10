@@ -6,3 +6,6 @@ fdf
 
 # Object files
 *.o
+
+# VsCode
+/.vscode
