@@ -6,56 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/11 01:04:52 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:19:49 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 void	check_args(int argc, char const *argv[]);
-void	read_map(t_fdf_map *map, char const *map_path);
-
-/**
- * @brief Checks if a registered key has been pressed every frame and executes
- * an action if so.
- *
- * @param key [bind] The key pressed.
- * @param param [in] Optional param, can be anything.
- */
-// void	check_keypress(mlx_key_data_t key, void *param)
-// {
-	// mlx_t	*mlx = param;
-
-	// if (key.key == MLX_KEY_ESCAPE && key.action == MLX_PRESS)
-		// mlx_close_window(mlx);
-// }
-
-// void	show_fps(void *param)
-// {
-	// t_fdf	*fdf;
-	// char	*fps;
-
-	// fdf = param;
-	// // Remove previous text
-	// mlx_delete_image(fdf->mlx, fdf->fps_img);
-	// // Print new text
-	// fps = ft_itoa((int)(1000 / fdf->mlx->delta_time));
-	// fdf->fps_img = mlx_put_string(fdf->mlx, fps, 10, 10);
-	// free(fps);
-	// // Attempt to show text in window
-	// if (mlx_image_to_window(fdf->mlx, fdf->fps_img, 10, 10) < 0)
-		// // If fails, close window
-		// mlx_close_window(fdf->mlx);
-// }
-
-// void	fdf_close(void *param)
-// {
-	// t_fdf	*fdf;
-
-	// fdf = (t_fdf *)param;
-	// if (fdf || !fdf)
-		// ft_putendl("Closing");
-// }
+void	read_map(t_map *map);
 
 /**
  * @brief Main entry point for the Fdf program.
@@ -76,21 +34,11 @@ int	main(
 
 	check_args(argc, argv);
 	ft_bzero(&fdf, sizeof(t_fdf));
-	read_map(&fdf.map, argv[1]);
 	fdf.map.name = argv[1];
-	// fdf.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
-	// fdf.map_img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// fdf.fps_img = mlx_new_image(fdf.mlx, 200, WINDOW_HEIGHT);
-	// if (!fdf.map_img || mlx_image_to_window(fdf.mlx, fdf.map_img, 0, 0) < 0
-		// || !fdf.fps_img || mlx_image_to_window(fdf.mlx, fdf.fps_img, 0, 0) < 0)
-		// return (EXIT_FAILURE);
-	// mlx_loop_hook(fdf.mlx, &show_fps, (void *)&fdf.mlx);
-	// mlx_key_hook(fdf.mlx, &check_keypress, (void *)fdf.mlx);
-	// mlx_close_hook(fdf.mlx, &fdf_close, (void *)&fdf);
-	// mlx_loop(fdf.mlx);
-	// mlx_close_window(fdf.mlx);
-	// mlx_terminate(fdf.mlx);
-	// free(fdf.map.color_map);
+	read_map(&fdf.map);
+	setup_mlx(&fdf);
+	mlx_loop(fdf.mlx);
+	mlx_terminate(fdf.mlx); //! No leaks
 	free_height_map(fdf.map.height_map, fdf.map.rows);
 	return (EXIT_SUCCESS);
 }
@@ -136,28 +84,24 @@ void	check_args(
 	close(map_fd);
 }
 
-
-
 /**
  * @brief Reads and parses the passed map.
  *
  * This function verifies each line of the passed file and stores it.
  *
  * @param[in,out] map The map struct.
- * @param[in] map_path The path to the map.
  *
  * @return Returns a `t_fdf_map struct` with all the necessary data.
  */
 void	read_map(
-	t_fdf_map *map,
-	char const *map_path
+	t_map *map
 )
 {
 	char		*row;
 	char		**splitted_row;
 	int			map_file;
 
-	map_file = open(map_path, O_RDONLY);
+	map_file = open(map->name, O_RDONLY);
 	row = get_next_line(map_file);
 	while (row && *row)
 	{

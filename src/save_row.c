@@ -6,13 +6,13 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/11 01:06:22 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/11 03:42:34 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	realloc_height_map(t_fdf_map *map);
+static int	realloc_height_map(t_map *map);
 // static void update_color_map();
 
 /**
@@ -20,7 +20,7 @@ static int	realloc_height_map(t_fdf_map *map);
  */
 int	save_row(
 	char **splitted_row,
-	t_fdf_map *map
+	t_map *map
 )
 {
 	char	**splitted_cell;
@@ -49,7 +49,7 @@ int	save_row(
  * @param[in] map
  */
 static int	realloc_height_map(
-	t_fdf_map *map
+	t_map *map
 )
 {
 	long	**new_height_map;

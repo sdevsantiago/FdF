@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 02:06:53 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/10 18:42:50 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:22:20 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_valid_color(char *color);
  */
 int	check_row(
 	char **splitted_row,
-	t_fdf_map *map
+	t_map *map
 )
 {
 	size_t	cols;
