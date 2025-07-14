@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/11 18:29:20 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/13 17:53:02 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRC = \
 	$(SRC_PATH)/hooks/check_keypress.c \
 	$(SRC_PATH)/hooks/show_fps.c \
 	$(SRC_PATH)/hooks/update_window_size.c \
-	$(SRC_PATH)/utils/free_height_map.c
+	$(SRC_PATH)/utils/free_map.c \
+	$(SRC_PATH)/utils/handle_error.c
 
 FDF_INCLUDE_PATH = ./include
 

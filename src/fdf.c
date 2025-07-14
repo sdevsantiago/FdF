@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/11 20:19:49 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:32:20 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(
 	setup_mlx(&fdf);
 	mlx_loop(fdf.mlx);
 	mlx_terminate(fdf.mlx); //! No leaks
-	free_height_map(fdf.map.height_map, fdf.map.rows);
+	free_map(fdf.map.points, fdf.map.rows, fdf.map.cols);
 	return (EXIT_SUCCESS);
 }
 
@@ -62,25 +62,13 @@ void	check_args(
 	int	map_fd;
 
 	if (argc != 2)
-	{
-		ft_eputendl(RED_TEXT"ERROR: Invalid number of arguments"RESET);
-		ft_eputendl("Usage: ./fdf <path-to-map>");
-		exit(EXIT_FAILURE);
-	}
+		handle_error(ENARGS);
 	if (!ft_strrchr(argv[1], '.')
 		|| ft_strncmp(".fdf\0", ft_strrchr(argv[1], '.'), 5))
-	{
-		ft_eputendl(RED_TEXT"ERROR: Invalid file extension"RESET);
-		ft_eputendl("File must have "BOLD".fdf"RESET" extension");
-		exit(EXIT_FAILURE);
-	}
+		handle_error(EFILEEXT);
 	map_fd = open(argv[1], O_RDONLY);
 	if (map_fd == -1)
-	{
-		ft_eputendl(RED_TEXT"ERROR: Unable to open map"RESET);
-		ft_eputendl(strerror(errno));
-		exit(errno); // 2 = ENOENT / 13 = EACCES / 24 = EMFILE
-	}
+		handle_error(errno);
 	close(map_fd);
 }
 
@@ -108,35 +96,26 @@ void	read_map(
 		splitted_row = ft_split(row, ' ');
 		if (!splitted_row)
 		{
-			ft_eputendl(RED_TEXT"ERROR: malloc"RESET);
-			ft_eputendl(strerror(errno));
 			close(map_file);
-			exit(errno); // ENOMEM
+			handle_error(errno);
 		}
 		if (!check_row(splitted_row, map))
 		{
-			ft_eputendl(RED_TEXT"ERROR: Map is invalid"RESET);
-			ft_eputstr("line ");
-			ft_eputnbr(map->rows + 1);
-			ft_eputchar('\n');
-			ft_eputstr(row);
+			close(map_file);
 			ft_free_split(splitted_row);
 			free(row);
-			close(map_file);
-			exit(EXIT_FAILURE); // invalid map
+			handle_error(EINVMAP);
 		}
 		if (!save_row(splitted_row, map))
 		{
-			ft_eputendl(RED_TEXT"ERROR: malloc"RESET);
-			ft_eputendl(strerror(errno));
+			close(map_file);
 			ft_free_split(splitted_row);
 			free(row);
-			close(map_file);
-			exit(errno); // ENOMEM
+			handle_error(errno);
 		}
 		ft_free_split(splitted_row);
 		free(row);
 		row = get_next_line(map_file);
 	}
-	ft_putstr(RESET);
+	close(map_file);
 }
