@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 10:28:46 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:15:34 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define MIN_WIDTH (int32_t)640
 # define MIN_HEIGHT (int32_t)480
 
-# define ISOMETRIC 30
+# define ISOMETRIC 30.0
 
 # define HEIGHT 0
 # define COLOR 1
@@ -68,6 +68,7 @@ typedef struct s_map
 	size_t		cols;
 	t_point		**points;
 	double		angle;
+	double		angle_rads;
 	double		cos_angle;
 	double		sin_angle;
 }				t_map;
@@ -90,6 +91,8 @@ typedef struct s_fdf
 void	setup_mlx(t_fdf *fdf);
 int		check_row(char **splitted_row, t_map *map);
 int		save_row(char **splitted_row, t_map *map);
+
+void	draw_map_bresenham(t_map *map, mlx_image_t *map_img);
 
 /* ********************************* Hooks ********************************** */
 

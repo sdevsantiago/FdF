@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/13 17:53:02 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/14 12:16:48 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC_PATH = src
 SRC = \
 	$(SRC_PATH)/fdf.c \
 	$(SRC_PATH)/check_row.c \
+	$(SRC_PATH)/draw_map_bresenham.c \
 	$(SRC_PATH)/save_row.c \
 	$(SRC_PATH)/setup_mlx.c \
 	$(SRC_PATH)/hooks/check_keypress.c \

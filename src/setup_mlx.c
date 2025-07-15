@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 03:52:26 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/13 13:30:58 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:44:23 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,31 @@ void	setup_mlx(
 	fdf->mlx = mlx_init(DEF_WIDTH, DEF_HEIGHT, TITLE, true);
 	if (!fdf->mlx)
 	{
+		free_map(fdf->map.points, fdf->map.rows, fdf->map.cols);
 		ft_eputendl("MLX failed to create a window.");
 		exit(EXIT_FAILURE);
 	}
 	fdf->fps_img = mlx_new_image(fdf->mlx, 100, 100);
-	if (!fdf->fps_img || mlx_image_to_window(fdf->mlx, fdf->fps_img, 10, 10) < 0)
+	if (!fdf->fps_img
+		|| mlx_image_to_window(fdf->mlx, fdf->fps_img, 10, 10) < 0)
 	{
-		ft_eputendl("Cagaste");
+		free_map(fdf->map.points, fdf->map.rows, fdf->map.cols);
+		ft_eputendl("Cagaste en fps");
 		exit(EXIT_FAILURE);
 	}
 	setup_window_monitor(fdf);
+	ft_putnbr(fdf->monitor.width);
+	ft_putchar('x');
+	ft_putnbr(fdf->monitor.height);
+	ft_putchar('\n');
+	fdf->map_img = mlx_new_image(fdf->mlx, fdf->monitor.width, fdf->monitor.height);
+	if (!fdf->map_img
+		|| mlx_image_to_window(fdf->mlx, fdf->map_img, 0, 0) < 0)
+	{
+		free_map(fdf->map.points, fdf->map.rows, fdf->map.cols);
+		ft_eputendl("Cagaste en map");
+		exit(EXIT_FAILURE);
+	}
 	setup_hooks(fdf);
 }
 

@@ -6,25 +6,24 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 10:29:50 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:33:01 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	realloc_map(t_map *map);
+static int realloc_map(t_map *map);
 // static void update_color_map();
 
 /**
  *
  */
-int	save_row(
+int save_row(
 	char **splitted_row,
-	t_map *map
-)
+	t_map *map)
 {
-	char	**splitted_cell;
-	size_t	x;
+	char **splitted_cell;
+	size_t x;
 
 	if (!realloc_map(map))
 	{
@@ -41,18 +40,19 @@ int	save_row(
 		if (!map->angle)
 		{
 			map->angle = ISOMETRIC;
-			map->sin_angle = sin(map->angle);
-			map->cos_angle = cos(map->angle);
+			map->angle_rads = map->angle * M_PI / 180.0;
+			map->sin_angle = sin(map->angle_rads);
+			map->cos_angle = cos(map->angle_rads);
 		}
 		map->points[map->rows - 1][x].x = x;
 		map->points[map->rows - 1][x].y = map->rows - 1;
 		map->points[map->rows - 1][x].z = ft_atol(splitted_cell[HEIGHT]);
-		map->points[map->rows - 1][x].x_prime = map->points[map->rows - 1][x].x + cos(30) * map->points[map->rows - 1][x].z;
-		map->points[map->rows - 1][x].y_prime = map->points[map->rows - 1][x].y + sin(30) * map->points[map->rows - 1][x].z;;
+		map->points[map->rows - 1][x].x_prime = (map->points[map->rows - 1][x].x - map->points[map->rows - 1][x].y) * map->cos_angle;
+		map->points[map->rows - 1][x].y_prime = (map->points[map->rows - 1][x].x + map->points[map->rows - 1][x].y) * map->sin_angle - map->points[map->rows - 1][x].z;
 		if (splitted_cell[COLOR])
 			map->points[map->rows - 1][x].color = ft_strdup(ft_strchr(splitted_cell[COLOR], ',') + 1);
 		else
-		map->points[map->rows - 1][x].color = ft_strdup("0xFFFFFF");
+			map->points[map->rows - 1][x].color = ft_strdup("0xFFFFFF");
 		if (!map->points[map->rows - 1][x].color)
 		{
 			free_map(map->points, map->rows, map->cols);
@@ -68,13 +68,12 @@ int	save_row(
 /**
  * @param[in] map
  */
-static int	realloc_map(
-	t_map *map
-)
+static int realloc_map(
+	t_map *map)
 {
-	t_point	**new_map;
-	size_t	x;
-	size_t	y;
+	t_point **new_map;
+	size_t x;
+	size_t y;
 
 	new_map = (t_point **)malloc(map->rows * sizeof(t_point *));
 	if (!new_map)
