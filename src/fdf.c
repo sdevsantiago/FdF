@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 14:44:08 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:05:50 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(
 	check_args(argc, argv);
 	ft_bzero(&fdf, sizeof(t_fdf));
 	fdf.map.name = argv[1];
-	read_map(&fdf.map);
+	read_map(&fdf.map); //! Crashes when passing big map
 	setup_mlx(&fdf);
 	draw_map_bresenham(&fdf.map, fdf.map_img);
 	mlx_loop(fdf.mlx);

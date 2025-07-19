@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 12:15:34 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:17:24 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_map
 	double		angle_rads;
 	double		cos_angle;
 	double		sin_angle;
+	double		x_prime;
 }				t_map;
 
 typedef struct s_monitor

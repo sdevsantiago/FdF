@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 14:33:01 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:55:37 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int save_row(
 		map->points[map->rows - 1][x].x = x;
 		map->points[map->rows - 1][x].y = map->rows - 1;
 		map->points[map->rows - 1][x].z = ft_atol(splitted_cell[HEIGHT]);
-		map->points[map->rows - 1][x].x_prime = (map->points[map->rows - 1][x].x - map->points[map->rows - 1][x].y) * map->cos_angle;
-		map->points[map->rows - 1][x].y_prime = (map->points[map->rows - 1][x].x + map->points[map->rows - 1][x].y) * map->sin_angle - map->points[map->rows - 1][x].z;
+		map->points[map->rows - 1][x].x_prime = map->points[map->rows - 1][x].x + map->cos_angle * map->points[map->rows - 1][x].z;
+		map->points[map->rows - 1][x].y_prime = map->points[map->rows - 1][x].y + map->sin_angle * map->points[map->rows - 1][x].z;
 		if (splitted_cell[COLOR])
 			map->points[map->rows - 1][x].color = ft_strdup(ft_strchr(splitted_cell[COLOR], ',') + 1);
 		else
