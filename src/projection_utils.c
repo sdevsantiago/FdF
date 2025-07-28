@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:47:23 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:33:52 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:50:28 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,12 @@ static void	find_bounds(t_map *map, double *bounds)
  * height `h`. The scaling preserves the aspect ratio and ensures the region
  * fits within 80% of the viewport dimensions.
  *
- * @param bounds Pointer to an array of 4 doubles representing the region to project:
- *               bounds[0] = min_x, bounds[1] = max_x, bounds[2] = min_y, bounds[3] = max_y.
+ * @param bounds Pointer to an array of 4 doubles representing the region to
+ *               project:
+ *               bounds[0] = min_x,
+ *               bounds[1] = max_x,
+ *               bounds[2] = min_y,
+ *               bounds[3] = max_y.
  * @param w      Width of the viewport.
  * @param h      Height of the viewport.
  * @param so     Pointer to an array of doubles where results are stored:

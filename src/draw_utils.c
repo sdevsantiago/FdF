@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:01:20 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:15:07 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:49:30 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	draw_line_init(t_point a, t_point b, int *params)
 /**
  * @brief Draws a single pixel on the given image at specified coordinates.
  *
- * This function checks if the (x, y) coordinates are within the bounds of the image.
- * If so, it sets the pixel at (x, y) to the specified color using mlx_put_pixel.
+ * This function checks if the (x, y) coordinates are within the bounds of the
+ * image. If so, it sets the pixel at (x, y) to the specified color using
+ * mlx_put_pixel.
  *
  * @param x       The x-coordinate of the pixel to draw.
  * @param y       The y-coordinate of the pixel to draw.
