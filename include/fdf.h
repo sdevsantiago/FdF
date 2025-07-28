@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/15 17:17:24 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:33:18 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@
 # define TITLE "FdF by sede-san"
 
 /* Window dimensions */
-# define DEF_WIDTH (int32_t)1920
-# define DEF_HEIGHT (int32_t)1080
-# define MIN_WIDTH (int32_t)640
-# define MIN_HEIGHT (int32_t)480
+# define WINDOW_WIDTH 1024
+# define WINDOW_HEIGHT 1024
 
 # define ISOMETRIC 30.0
+# define COS_ISOMETRIC 0.86602540378443870761060452423407696187496185302734375
+# define SIN_ISOMETRIC 0.5
 
 # define HEIGHT 0
 # define COLOR 1
@@ -47,6 +47,14 @@
  * EMFILE = 14
  */
 
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+	int	a;
+}				t_color;
+
 typedef struct s_point
 {
 	size_t	x;
@@ -54,56 +62,56 @@ typedef struct s_point
 	size_t	y;
 	double	y_prime;
 	long	z;
-	char	*color;
+	t_color	color;
 }				t_point;
 
-/**
- * When perspective is isometric, the sum of all 3 angles is 120,
- * use 30 as angle value
- */
 typedef struct s_map
 {
-	char const	*name;
+	int			fd;
 	size_t		rows;
 	size_t		cols;
 	t_point		**points;
-	double		angle;
-	double		angle_rads;
-	double		cos_angle;
-	double		sin_angle;
 	double		x_prime;
+	long		min_z;
+	long		max_z;
 }				t_map;
-
-typedef struct s_monitor
-{
-	int32_t	height;
-	int32_t	width;
-}				t_monitor;
 
 typedef struct s_fdf
 {
 	mlx_t		*mlx;
 	t_map		map;
 	mlx_image_t	*map_img;
-	mlx_image_t	*fps_img;
-	t_monitor	monitor;
+	double		rotation_z;
 }				t_fdf;
 
 void	setup_mlx(t_fdf *fdf);
 int		check_row(char **splitted_row, t_map *map);
 int		save_row(char **splitted_row, t_map *map);
 
-void	draw_map_bresenham(t_map *map, mlx_image_t *map_img);
+void	render_map(t_map *map, mlx_image_t *map_img);
+void	apply_isometric_projection(t_point *point);
+void	apply_isometric_projection_with_transforms(t_point *point, double zoom,
+			double rotation_z);
+void	scale_and_center_map(t_map *map, int window_width, int window_height);
+void	scale_and_center_map_with_zoom(t_map *map, int window_width,
+			int window_height, double zoom_factor);
+void	draw_line_init(t_point a, t_point b, int *params);
+void	draw_pixel(int x, int y, int color, mlx_image_t *map_img);
+void	bresenham_step(int *params);
+int		interpolate_color(int color1, int color2, float ratio);
+void	set_point_color(t_point *point, const char *color);
 
 /* ********************************* Hooks ********************************** */
 
-void	check_keypress(mlx_key_data_t keydata, void *param);
-void	update_window_size(int32_t width, int32_t height, void* param);
-void	show_fps(void *param);
+void	key_hook(mlx_key_data_t keydata, void *param);
 
 /* ********************************* Utils ********************************** */
 
-void	free_map(t_point **points, size_t rows, size_t cols);
-void	handle_error(int error);
+void	free_map(t_point **points, size_t rows);
+int		get_rgba(int r, int g, int b, int a);
+
+/* ********************************* Error ********************************** */
+
+void	error(const char *err_msg, t_fdf *fdf);
 
 #endif

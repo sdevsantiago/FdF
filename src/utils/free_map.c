@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/10 13:56:03 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 10:28:17 by sede-san         ###   ########.fr       */
+/*   Created: 2025/07/27 16:30:33 by sede-san          #+#    #+#             */
+/*   Updated: 2025/07/27 16:30:52 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,21 @@
  * then frees the t_point structure itself, and finally frees the array of
  * pointers.
  *
- * @param points A pointer to an array of pointers to t_point structures.
- * @param rows The number of rows (t_point pointers) in the array.
+ * @param points A pointer to a structure containing all map info.
+ * @param rows
  */
-inline void	free_map(
+void	free_map(
 	t_point **points,
-	size_t rows,
-	size_t cols
+	size_t	rows
 )
 {
-	size_t	x;
-	size_t	y;
+	size_t	i;
 
-	y = 0;
-	while (y < rows)
+	i = 0;
+	while (i < rows)
 	{
-		x = 0;
-		while (x < cols)
-		{
-			free(points[y][x].color);
-			x++;
-		}
-		free(points[y]);
-		y++;
+		free(points[i]);
+		i++;
 	}
 	free(points);
 }

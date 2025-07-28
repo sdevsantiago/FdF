@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_keypress.c                                   :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 02:08:19 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/14 12:20:19 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:41:56 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /**
- * @param _keydata Not used in this context.
- * @param param
+ * @brief Handles keyboard input events for the application.
+ *
+ * This function is called whenever a key event occurs. It checks if the
+ * pressed key is the Escape key (MLX_KEY_ESCAPE). If so, it closes the
+ * application's window.
+ *
+ * @param keydata The key event data, containing information about the key
+ * pressed.
+ * @param param A pointer to the application's main data structure (t_fdf).
  */
-void	check_keypress(mlx_key_data_t _keydata, void *param)
+void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	mlx_t	*mlx;
+	t_fdf	*fdf;
 
-	(void)_keydata;
-	mlx = (mlx_t *)param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		ft_putendl("Up");
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		ft_putendl("Down");
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		ft_putendl("Left");
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		ft_putendl("Right");
+	fdf = (t_fdf *)param;
+	if (keydata.key == MLX_KEY_ESCAPE)
+		mlx_close_window(fdf->mlx);
 }
