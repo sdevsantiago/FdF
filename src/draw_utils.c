@@ -6,12 +6,34 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:01:20 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 15:01:20 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:15:07 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/**
+ * @brief Initializes parameters for drawing a line between two points using
+ * Bresenham's algorithm.
+ *
+ * This function calculates and sets up the necessary parameters for line
+ * drawing between points 'a' and 'b'. The parameters array is filled as
+ * follows:
+ * - params[0]: Absolute difference in x coordinates (delta x)
+ * - params[1]: Absolute difference in y coordinates (delta y)
+ * - params[2]: Step direction for x (+1 or -1)
+ * - params[3]: Step direction for y (+1 or -1)
+ * - params[4]: Starting x coordinate
+ * - params[5]: Starting y coordinate
+ * - params[6]: Initial error value (delta x - delta y)
+ * - params[7]: Counter or auxiliary variable (initialized to 0)
+ * - params[8]: Maximum of delta x and delta y (used for iteration count)
+ *
+ * @param a      The starting point of the line (t_point struct).
+ * @param b      The ending point of the line (t_point struct).
+ * @param params An integer array of size at least 9 to store the computed
+ * parameters.
+ */
 void	draw_line_init(t_point a, t_point b, int *params)
 {
 	params[0] = abs((int)b.x_prime - (int)a.x_prime);
@@ -34,6 +56,18 @@ void	draw_line_init(t_point a, t_point b, int *params)
 		params[8] = params[1];
 }
 
+/**
+ * @brief Draws a single pixel on the given image at specified coordinates.
+ *
+ * This function checks if the (x, y) coordinates are within the bounds of the image.
+ * If so, it sets the pixel at (x, y) to the specified color using mlx_put_pixel.
+ *
+ * @param x       The x-coordinate of the pixel to draw.
+ * @param y       The y-coordinate of the pixel to draw.
+ * @param color   The color value to set for the pixel.
+ * @param map_img Pointer to the mlx_image_t image where the pixel will be
+ * drawn.
+ */
 void	draw_pixel(int x, int y, int color, mlx_image_t *map_img)
 {
 	if (x >= 0 && x < (int)map_img->width)
@@ -43,6 +77,24 @@ void	draw_pixel(int x, int y, int color, mlx_image_t *map_img)
 	}
 }
 
+/**
+ * @brief Performs a single step of Bresenham's line drawing algorithm.
+ *
+ * This function updates the parameters required for Bresenham's algorithm
+ * to draw a line between two points. The parameters array contains all
+ * necessary values for the algorithm, such as differences in coordinates,
+ * current positions, and error values.
+ *
+ * @param params An integer array containing the Bresenham algorithm parameters:
+ *        params[0] - delta x (dx)
+ *        params[1] - delta y (dy)
+ *        params[2] - step x (sx)
+ *        params[3] - step y (sy)
+ *        params[4] - current x position
+ *        params[5] - current y position
+ *        params[6] - error value (err)
+ *        params[7] - step counter or auxiliary value
+ */
 void	bresenham_step(int *params)
 {
 	int	e2;

@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 16:33:18 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:34:01 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	apply_isometric_projection(t_point *point);
 void	apply_isometric_projection_with_transforms(t_point *point, double zoom,
 			double rotation_z);
 void	scale_and_center_map(t_map *map, int window_width, int window_height);
-void	scale_and_center_map_with_zoom(t_map *map, int window_width,
-			int window_height, double zoom_factor);
 void	draw_line_init(t_point a, t_point b, int *params);
 void	draw_pixel(int x, int y, int color, mlx_image_t *map_img);
 void	bresenham_step(int *params);

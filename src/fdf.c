@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 16:33:32 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:31:00 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ static void	check_args(int argc, char const *argv[], t_fdf *fdf);
 static void	read_map(t_fdf *fdf);
 
 /**
- * @brief Main entry point for the Fdf program.
+ * @brief Entry point for the FdF application.
  *
- * Checks and parses command-line arguments and initializes the Fdf application.
+ * Initializes the FdF structure, processes command-line arguments,
+ * reads the map data, sets up the MLX graphics context, scales and centers
+ * the map, renders the map to an image, and enters the main event loop.
+ * Cleans up resources before exiting.
  *
  * @param argc Number of command-line arguments.
  * @param argv Array of command-line argument strings.
- *
- * @return Exit status code.
+ * @return EXIT_SUCCESS on successful execution.
  */
 int	main(
 	int argc,
@@ -41,6 +43,7 @@ int	main(
 	render_map(&fdf.map, fdf.map_img);
 	mlx_loop(fdf.mlx);
 	mlx_terminate(fdf.mlx);
+	free_map(fdf.map.points, fdf.map.rows);
 	return (EXIT_SUCCESS);
 }
 

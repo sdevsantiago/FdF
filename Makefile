@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/28 17:14:47 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/28 18:16:41 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME = fdf
 CC = cc
 
 # Compilation flags
-CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast
+# CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast
 
 HEADERS = -I $(FDF_INCLUDE_PATH) -I $(MLX_INCLUDE_PATH) -I $(GNL_INCLUDE_PATH) -I $(LIBFT_INCLUDE_PATH)
 

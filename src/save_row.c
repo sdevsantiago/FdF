@@ -6,16 +6,16 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 16:43:59 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:21:47 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 static int	realloc_map(t_map *map);
-static void	set_coords(t_point *point, size_t x, size_t y, size_t z);
-
 static void	process_cell(char **splitted_row, t_map *map, size_t x);
+static void	set_coords(t_point *point, size_t x, size_t y, size_t z);
+static int	copy_old_rows(t_map *map, t_point **new_map);
 
 int	save_row(
 	char **splitted_row,
@@ -54,8 +54,6 @@ static void	process_cell(char **splitted_row, t_map *map, size_t x)
 	ft_free_split(splitted_cell);
 }
 
-static int	copy_old_rows(t_map *map, t_point **new_map);
-
 static int	realloc_map(
 	t_map *map)
 {
@@ -72,7 +70,8 @@ static int	realloc_map(
 		y = 0;
 	new_map[y] = (t_point *)malloc(map->cols * sizeof(t_point));
 	if (!new_map[y])
-		return (free_map(new_map, map->rows), 0);
+		return (free_map(new_map, map->rows),
+			free_map(map->points, map->rows - 1), 0);
 	return (free_map(map->points, map->rows - 1), map->points = new_map, 1);
 }
 
