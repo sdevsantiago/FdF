@@ -6,11 +6,14 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 04:39:39 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:12:56 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:21:51 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static int	is_custom_error(void);
+static void	show_custom_error_info(void);
 
 /**
  * @brief Handles error reporting, resource cleanup, and program termination.
@@ -36,9 +39,28 @@ void	error(const char *err_msg, t_fdf *fdf)
 	ft_eputstr(RED_TEXT"ERROR: ");
 	ft_eputstr((char *)err_msg);
 	ft_eputendl(RESET);
-	if (errno)
-		ft_eputendl(strerror(errno));
+	if (is_custom_error())
+		show_custom_error_info();
 	else
-		errno = 1;
+		ft_eputendl(strerror(errno));
 	exit(errno);
+}
+
+static int	is_custom_error(void)
+{
+	return (errno != ENARGS || errno != EFILEEXT || errno != EINVMAP);
+}
+
+static void	show_custom_error_info(void)
+{
+	if (errno == ENARGS || errno == EFILEEXT)
+	{
+		ft_eputendl("Usage: ./fdf <path-to-map>");
+		errno = 1;
+	}
+	else if (errno == EINVMAP)
+	{
+		ft_eputendl("Check for illegal characters, format must be like shown:");
+		ft_eputendl("[Height],[Color] -> 10,0xFF00AA");
+	}
 }

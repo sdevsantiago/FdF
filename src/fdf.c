@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:31:00 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:24:23 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	check_args(int argc, char const *argv[], t_fdf *fdf);
 static void	read_map(t_fdf *fdf);
+static void	process_row(char *row, t_fdf *fdf);
 
 /**
  * @brief Entry point for the FdF application.
@@ -67,23 +68,33 @@ static void	check_args(
 )
 {
 	if (argc != 2)
+	{
+		errno = ENARGS;
 		error("Invalid number of arguments", fdf);
-	if (ft_strncmp(".fdf\0", ft_strrchr(argv[1], '.'), 5))
+	}
+	if (!ft_strchr(argv[1], '.')
+		|| ft_strncmp(".fdf\0", ft_strrchr(argv[1], '.'), 5))
+	{
+		errno = EFILEEXT;
 		error("Invalid file extension", fdf);
+	}
 	fdf->map.fd = open(argv[1], O_RDONLY);
 	if (fdf->map.fd == -1)
 		error("Unable to open map", fdf);
 }
 
 /**
- * @brief Reads and parses the passed map.
+ * @brief Reads a map from a file and processes each row.
  *
- * This function verifies each line of the passed file and stores it.
+ * This function reads lines from a file associated with the given
+ * `t_fdf` structure. For each line read, it calls the `process_row`
+ * function to handle the data. The function continues reading until
+ * there are no more lines to read. After processing, it closes the
+ * file descriptor associated with the map.
  *
- * @param[in,out] fdf The fdf struct.
+ * @param fdf A pointer to the `t_fdf` structure containing the map
+ *            file descriptor and other relevant data.
  */
-static void	process_row(char *row, t_fdf *fdf);
-
 static void	read_map(
 	t_fdf *fdf
 )
@@ -101,6 +112,21 @@ static void	read_map(
 	fdf->map.fd = -1;
 }
 
+/**
+ * @brief Processes a single row of the map.
+ *
+ * This function takes a row of data as a string, splits it into individual
+ * components, and checks if the row is valid. If the row is valid, it saves
+ * the data into the map structure. In case of any errors, it handles memory
+ * cleanup and reports the error.
+ *
+ * @param row A string representing a single row of the map data.
+ * @param fdf A pointer to the t_fdf structure containing the map and related
+ *            data.
+ *
+ * @note This function will terminate the program with an error message if
+ *       memory allocation fails or if the row is invalid.
+ */
 static void	process_row(char *row, t_fdf *fdf)
 {
 	char	**splitted_row;
@@ -111,6 +137,7 @@ static void	process_row(char *row, t_fdf *fdf)
 	if (!check_row(splitted_row, &fdf->map))
 	{
 		ft_free_split(splitted_row);
+		errno = EINVMAP;
 		error("Map is invalid", fdf);
 	}
 	if (!save_row(splitted_row, &fdf->map))

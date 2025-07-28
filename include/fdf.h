@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:34:01 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/28 20:24:03 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@
 # define COLOR 1
 
 /* Errors */
-# define ENARGS 3
-# define EFILEEXT 4
-# define ENOMAP 5
-# define EINVMAP 6
+# define ENARGS 1003
+# define EFILEEXT 1004
+# define EINVMAP 1005
 /**
  * ENOENT = 2
  * ENOMEM = 12
