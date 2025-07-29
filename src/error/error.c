@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 04:39:39 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 20:21:51 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:34:44 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	error(const char *err_msg, t_fdf *fdf)
 
 static int	is_custom_error(void)
 {
-	return (errno != ENARGS || errno != EFILEEXT || errno != EINVMAP);
+	return (errno == ENARGS || errno == EFILEEXT || errno == EINVMAP);
 }
 
 static void	show_custom_error_info(void)
