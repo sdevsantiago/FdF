@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:21:47 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:16:22 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ static int	copy_old_rows(t_map *map, t_point **new_map)
  * - sin(30°) = 1/2 = 0.5
  *
  * @param point Pointer to the t_point structure to be initialized.
- * @param x The x-coordinate value.
- * @param y The y-coordinate value.
- * @param z The z-coordinate value.
+ * @param x     The x-coordinate value.
+ * @param y     The y-coordinate value.
+ * @param z     The z-coordinate value.
  */
 static void	set_coords(
 	t_point *point,
@@ -128,7 +128,7 @@ static void	set_coords(
 	point->x = x;
 	point->y = y;
 	point->z = z;
-	point->x_prime = ((double)point->x - (double)point->y) * COS_ISOMETRIC;
-	point->y_prime = ((double)point->x + (double)point->y) * SIN_ISOMETRIC
+	point->x_prime = ((double)point->x - (double)point->y) * cos(30.0 * M_PI / 180);
+	point->y_prime = ((double)point->x + (double)point->y) * sin(150.0 * M_PI / 180)
 		- (double)point->z;
 }

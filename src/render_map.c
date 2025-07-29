@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:02:23 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/28 18:36:38 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:35:56 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ static void	draw_line(
 	while (1)
 	{
 		if (params[8] > 0)
-			draw_pixel(params[4], params[5], interpolate_color(color_a, color_b,
-					(float)params[7] / (float)params[8]), map_img);
+			draw_pixel(params[4], params[5],
+				color_a, map_img);
 		else
-			draw_pixel(params[4], params[5], interpolate_color(color_a, color_b,
-					0.0f), map_img);
+			draw_pixel(params[4], params[5], color_b, map_img);
 		if (params[4] == (int)b.x_prime && params[5] == (int)b.y_prime)
 			break ;
 		bresenham_step(params);
