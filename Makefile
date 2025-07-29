@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/28 19:21:24 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/29 18:23:35 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRC = \
 	$(SRC_PATH)/render_map.c \
 	$(SRC_PATH)/save_row.c \
 	$(SRC_PATH)/setup_mlx.c \
+	$(SRC_PATH)/point_utils.c \
 	$(SRC_PATH)/projection_utils.c \
 	$(SRC_PATH)/error/error.c \
 	$(SRC_PATH)/hooks/key_hook.c \

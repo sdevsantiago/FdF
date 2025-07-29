@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 18:48:02 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/29 12:17:29 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:41:38 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(
 	setup_mlx(&fdf);
 	scale_and_center_map(&fdf.map, WINDOW_WIDTH, WINDOW_HEIGHT);
 	render_map(&fdf.map, fdf.map_img);
-	fdf.map.view = ISOMETRIC;
 	mlx_loop(fdf.mlx);
 	mlx_terminate(fdf.mlx);
 	free_map(fdf.map.points, fdf.map.rows);

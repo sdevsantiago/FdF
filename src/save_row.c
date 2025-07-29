@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:21:18 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/29 12:16:22 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:22:31 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	realloc_map(t_map *map);
 static void	process_cell(char **splitted_row, t_map *map, size_t x);
-static void	set_coords(t_point *point, size_t x, size_t y, size_t z);
 static int	copy_old_rows(t_map *map, t_point **new_map);
 
 int	save_row(
@@ -50,7 +49,7 @@ static void	process_cell(char **splitted_row, t_map *map, size_t x)
 	}
 	set_coords(&map->points[map->rows - 1][x],
 		x, map->rows - 1, ft_atol(splitted_cell[HEIGHT]));
-	set_point_color(&map->points[map->rows - 1][x], splitted_cell[COLOR]);
+	set_color(&map->points[map->rows - 1][x], splitted_cell[COLOR]);
 	ft_free_split(splitted_cell);
 }
 
@@ -95,40 +94,4 @@ static int	copy_old_rows(t_map *map, t_point **new_map)
 		y++;
 	}
 	return (1);
-}
-
-/**
- * @brief Sets the coordinates and their isometric projections for a point.
- *
- * This function initializes the x, y, and z coordinates of the given t_point
- * structure. It also calculates the isometric projection coordinates (x_prime
- * and y_prime) using the provided x, y, and z values, along with the
- * COS_ISOMETRIC and SIN_ISOMETRIC constants.
- *
- * Isometric projection formula:
- * x' = (x - y) * cos(30°)
- * y' = (x + y) * sin(30°) - z
- *
- * Where:
- * - cos(30°) = √3/2 ≈ 0.866
- * - sin(30°) = 1/2 = 0.5
- *
- * @param point Pointer to the t_point structure to be initialized.
- * @param x     The x-coordinate value.
- * @param y     The y-coordinate value.
- * @param z     The z-coordinate value.
- */
-static void	set_coords(
-	t_point *point,
-	size_t x,
-	size_t y,
-	size_t z
-)
-{
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	point->x_prime = ((double)point->x - (double)point->y) * cos(30.0 * M_PI / 180);
-	point->y_prime = ((double)point->x + (double)point->y) * sin(150.0 * M_PI / 180)
-		- (double)point->z;
 }

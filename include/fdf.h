@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:55:10 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/29 14:31:29 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:22:40 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_map
 	double		x_prime;
 	long		min_z;
 	long		max_z;
-	double		view;
 }				t_map;
 
 typedef struct s_fdf
@@ -95,8 +94,9 @@ void	scale_and_center_map(t_map *map, int window_width, int window_height);
 void	draw_line_init(t_point a, t_point b, int *params);
 void	draw_pixel(int x, int y, int color, mlx_image_t *map_img);
 void	bresenham_step(int *params);
-// int		interpolate_color(int color1, int color2, float ratio);
-void	set_point_color(t_point *point, char *color);
+int		interpolate_color(int color1, int color2, float ratio);
+void	set_coords(t_point *point, size_t x, size_t y, size_t z);
+void	set_color(t_point *point, char *color);
 
 /* ********************************* Hooks ********************************** */
 

@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:01:20 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/29 14:33:50 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:21:43 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,85 +130,21 @@ void	bresenham_step(int *params)
  *
  * @return The interpolated color in ARGB format.
  */
-// int	interpolate_color(int color1, int color2, float ratio)
-// {
-// 	int	components[8];
-
-// 	components[0] = (color1 >> 24) & 255;
-// 	components[1] = (color1 >> 16) & 255;
-// 	components[2] = (color1 >> 8) & 255;
-// 	components[3] = color1 & 255;
-// 	components[4] = (color2 >> 24) & 255;
-// 	components[5] = (color2 >> 16) & 255;
-// 	components[6] = (color2 >> 8) & 255;
-// 	components[7] = color2 & 255;
-// 	return (get_rgba(components[0] + (int)((components[4] - components[0])
-// 			* ratio), components[1] + (int)((components[5]
-// 			- components[1]) * ratio), components[2]
-// 		+ (int)((components[6] - components[2]) * ratio),
-// 		components[3] + (int)((components[7] - components[3]) * ratio)));
-// }
-
-/**
- * @brief Sets the color of a point based on a hexadecimal color string.
- *
- * This function takes a pointer to a `t_point` structure and a color string
- * in hexadecimal format (e.g., "#RRGGBB"). It extracts the red, green, and blue
- * components from the color string and assigns them to the corresponding fields
- * in the `point->color` structure. If the color string is NULL, the point's
- * color is set to white (255, 255, 255). The alpha component is always set to
- * 255.
- *
- * @param point A pointer to the `t_point` structure whose color will be set.
- * @param color A string representing the color in hexadecimal format. If NULL,
- *              the point's color will be set to white.
- */
-void	set_point_color(t_point *point, char *color)
+int	interpolate_color(int color1, int color2, float ratio)
 {
-	char	*tmp;
-	size_t	i;
+	int	components[8];
 
-	if (color)
-	{
-		i = 2;
-		while (i < ft_strlen(color))
-		{
-			color[i] = ft_toupper(color[i]);
-			i++;
-		}
-		if (ft_strlen(color) >= 8)
-		{
-			tmp = ft_substr(color, 2, 2);
-			point->color.r = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-			tmp = ft_substr(color, 4, 2);
-			point->color.g = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-			tmp = ft_substr(color, 6, 2);
-			point->color.b = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-		}
-		else if (ft_strlen(color) >= 6)
-		{
-			tmp = ft_substr(color, 2, 2);
-			point->color.g = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-			tmp = ft_substr(color, 4, 2);
-			point->color.b = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-		}
-		else if (ft_strlen(color) >= 4)
-		{
-			tmp = ft_substr(color, 2, 2);
-			point->color.b = ft_atoi_base(tmp, HEX_BASE);
-			free(tmp);
-		}
-	}
-	else
-	{
-		point->color.r = 255;
-		point->color.g = 255;
-		point->color.b = 255;
-	}
-	point->color.a = 255;
+	components[0] = (color1 >> 24) & 255;
+	components[1] = (color1 >> 16) & 255;
+	components[2] = (color1 >> 8) & 255;
+	components[3] = color1 & 255;
+	components[4] = (color2 >> 24) & 255;
+	components[5] = (color2 >> 16) & 255;
+	components[6] = (color2 >> 8) & 255;
+	components[7] = color2 & 255;
+	return (get_rgba(components[0] + (int)((components[4] - components[0])
+			* ratio), components[1] + (int)((components[5]
+			- components[1]) * ratio), components[2]
+		+ (int)((components[6] - components[2]) * ratio),
+		components[3] + (int)((components[7] - components[3]) * ratio)));
 }

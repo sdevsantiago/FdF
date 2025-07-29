@@ -6,7 +6,7 @@
 /*   By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 03:52:26 by sede-san          #+#    #+#             */
-/*   Updated: 2025/07/27 20:38:19 by sede-san         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:55:34 by sede-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ void	setup_mlx(
 	if (!fdf->mlx)
 		error("MLX failed to create a window", fdf);
 	mlx_get_monitor_size(0, &width, &height);
-	if (width < WINDOW_WIDTH || height < WINDOW_HEIGHT)
-	{
-		mlx_terminate(fdf->mlx);
-		width = ft_imin(width, height) * 0.7;
-		height = width;
-		fdf->mlx = mlx_init(width, height, TITLE, false);
-	}
 	fdf->map_img = mlx_new_image(fdf->mlx, fdf->mlx->width, fdf->mlx->height);
 	if (!fdf->map_img
 		|| mlx_image_to_window(fdf->mlx, fdf->map_img, 0, 0) < 0)
