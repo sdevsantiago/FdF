@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/29 18:23:35 by sede-san         ###   ########.fr        #
+#    Updated: 2025/07/29 19:25:28 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,6 +191,7 @@ get_next_line:
 		echo "$(YELLOW)$(EMOJI_WRENCH) Cloning $(GNL)...$(RESET)"; \
 		git clone $(GNL_REPO) $(GNL_PATH); \
 		rm -rf $(GNL_PATH)/.git; \
+		rm -rf $(GNL_PATH)/tests; \
 		echo "$(GREEN)$(EMOJI_CHECK) $(GNL) cloned...$(RESET)"; \
 	fi
 	@if [ ! -f $(GNL_BIN) ]; then \
