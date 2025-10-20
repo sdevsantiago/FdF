@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Prerequisites
-        run: sudo apt install build-essential glfw
+        run: sudo apt install build-essential make cmake libx11-dev libglfw3-dev libglfw3 xorg-dev
 
       - name: Show Make Version
         run: make --version
