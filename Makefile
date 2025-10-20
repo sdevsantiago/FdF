@@ -6,7 +6,7 @@
 #    By: sede-san <sede-san@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/23 19:07:42 by sede-san          #+#    #+#              #
-#    Updated: 2025/07/29 19:25:28 by sede-san         ###   ########.fr        #
+#    Updated: 2025/10/20 20:56:25 by sede-san         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,7 +183,7 @@ libft:
 GNL = get_next_line
 GNL_REPO = https://github.com/sdevsantiago/get_next_line.git
 GNL_PATH = $(LIB_PATH)/$(GNL)
-GNL_INCLUDE_PATH = $(GNL_PATH)
+GNL_INCLUDE_PATH = $(GNL_PATH)/include
 GNL_BIN = $(GNL_PATH)/get_next_line.a
 
 get_next_line:
